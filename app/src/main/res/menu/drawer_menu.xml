@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_a"
+        android:checkable="true"
+        android:icon="@drawable/ic_send"
+        android:title="Activity Life Cycle"
+        />
+
+    <item
+        android:id="@+id/item_b"
+        android:checkable="true"
+        android:icon="@drawable/ic_send"
+        android:title="Fragment"
+        />
+
+    <item
+        android:id="@+id/item_c"
+        android:checkable="true"
+        android:icon="@drawable/ic_send"
+        android:title="Collapsible"
+        />
+
+    <item
+        android:id="@+id/item_d"
+        android:checkable="true"
+        android:icon="@drawable/ic_send"
+        android:title="RecyclerView "
+        />
+
+<!--    <item-->
+<!--        android:id="@+id/item_e"-->
+<!--        android:checkable="true"-->
+<!--        android:icon="@android:drawable/ic_search_category_default"-->
+<!--        android:title="Choice List"-->
+<!--        />-->
+<!--    <item-->
+<!--        android:id="@+id/item_f"-->
+<!--        android:checkable="true"-->
+<!--        android:icon="@android:drawable/ic_menu_upload"-->
+<!--        android:title="Upload Post"-->
+<!--        />-->
+
+<!--    <item-->
+<!--        android:id="@+id/item_g"-->
+<!--        android:checkable="true"-->
+<!--        android:icon="@android:drawable/ic_menu_upload"-->
+<!--        android:title="Retrive Post"-->
+<!--        />-->
+</menu>
