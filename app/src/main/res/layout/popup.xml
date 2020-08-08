@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:padding="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <EditText
+                android:id="@+id/editEmployName"
+                android:layout_width="match_parent"
+                android:hint="Employ Name..."
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/input"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/editEmployPosition"
+                android:layout_below="@id/editEmployName"
+                android:hint="Employ Position"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/editEmployContact"
+                android:layout_below="@id/editEmployPosition"
+                android:hint="Contact No."
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/editEmployWebpage"
+                android:layout_below="@id/editEmployContact"
+                android:hint="Webpage Link"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/editEmployEmail"
+                android:layout_below="@id/editEmployWebpage"
+                android:hint="Employ Email"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/editEmployAddress"
+                android:layout_below="@id/editEmployEmail"
+                android:hint="Address"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:textSize="20dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/submitEmployBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editEmployAddress"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/buttons"
+                android:text="Submit"
+                android:textSize="20dp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
+
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

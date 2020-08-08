@@ -15,11 +15,23 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.allproject.Activity.CollapsibleActivity;
+import com.example.allproject.Activity.EmployListActivity;
 import com.example.allproject.Activity.FragmentActivity;
-import com.example.allproject.Activity.LifeCycleActivity;
 import com.example.allproject.Activity.RecyclerViewActivity;
+import com.example.allproject.Activity.SqLiteDatabaseActivity;
+import com.example.allproject.Adapter.ProductsAdapter;
+import com.example.allproject.Class.Product;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +42,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle drawerToggle;
 
 
-
+    private static final String URL_PRODUCTS = "http://10.0.2.2/android/Food_Shop/all_food.php";
+    private RecyclerView recyclerView ;
+    List<Product> productList;
 
 
     @Override
@@ -42,6 +56,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.main_page_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("All Project");
+
+        recyclerView = findViewById(R.id.recyclerView) ;
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        productList = new ArrayList<>();
+
+        loadProducts();
+
+
+
 
 
 
@@ -61,6 +86,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+    private void loadProducts() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting the string to json array object
+                            JSONArray array = new JSONArray(response);
+
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
+
+                                //getting product object from json array
+                                JSONObject product = array.getJSONObject(i);
+
+                                //adding the product to product list
+                                productList.add(new Product(
+                                        product.getInt("id"),
+                                        product.getString("food_name"),
+                                        product.getDouble("price"),
+                                        product.getString("resturant_name"),
+                                        product.getString("rating"),
+                                        product.getString("image")
+                                ));
+                            }
+
+                            ProductsAdapter adapter = new ProductsAdapter(MainActivity.this, productList);
+                            recyclerView.setAdapter(adapter);
+                            GridLayoutManager manager = new GridLayoutManager(getApplicationContext(), 2, GridLayoutManager.VERTICAL, false);
+                            recyclerView.setLayoutManager(manager);
+
+//                            Toast.makeText(MainActivity.this, "successfull", Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        //adding our stringrequest to queue
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
           return super.onOptionsItemSelected(item);
@@ -77,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId()){
             case R.id.item_a:
-                startActivity(new Intent(this, LifeCycleActivity.class));
+                startActivity(new Intent(this, EmployListActivity.class));
                 break;
             case R.id.item_b:
                 startActivity(new Intent(this, FragmentActivity.class));
@@ -88,12 +162,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.item_d:
                 startActivity(new Intent(this, RecyclerViewActivity.class));
                 break;
-//            case R.id.item_e:
-//                startActivity(new Intent(this, ChoiceActivity.class));
-//                break;
-//            case R.id.item_f:
+            case R.id.item_e:
+                startActivity(new Intent(this, SqLiteDatabaseActivity.class));
+                break;
+            case R.id.item_f:
 //                startActivity(new Intent(this, UpploadPostActivity.class));
-//                break;
+                break;
 //            case R.id.item_g:
 //                startActivity(new Intent(this, DepartmentPostActivity.class));
 //                break;
@@ -101,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return false;
     }
+
     private void closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);
     }

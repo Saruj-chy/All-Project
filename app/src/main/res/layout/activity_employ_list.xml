@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".Activity.EmployListActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:background="#811FE1"
+        android:text="All Employ List"
+        android:textSize="25dp"
+        android:textColor="@android:color/background_light"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="0dp"
+        android:padding="3dp"
+        android:gravity="center"
+        />
+    <ListView
+        android:id="@+id/employListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView"
+        android:drawSelectorOnTop="true"
+        android:visibility="visible">
+
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/relatvelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:id="@+id/linearLayout01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:id="@+id/textViewemployName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nameText"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout02"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/linearLayout01"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Position: "
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:id="@+id/textViewemployPosition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="positionText"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout03"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/linearLayout02"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact No : "
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:id="@+id/textViewemployContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="contactText"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout04"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/linearLayout03"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Webpage Link: "
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:id="@+id/textViewemployWebpage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="weblinkText"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout05"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/linearLayout04"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email: "
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:id="@+id/textViewemployEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="emailText"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout06"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/linearLayout05"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address: "
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:layout_weight="2"
+                />
+            <TextView
+                android:id="@+id/textViewemployAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="addressText"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Back"
+            android:textColor="@android:color/background_light"
+            android:background="@android:color/black"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/linearLayout06"
+            android:layout_marginTop="50dp"
+            />
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
