@@ -19,52 +19,60 @@ import com.example.allproject.R;
 
 import java.util.List;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductViewHolder> {
+public class JsonAdapter extends RecyclerView.Adapter<JsonAdapter.ProductViewHolder> {
 
 
     private Context mCtx;
     private List<Product> productList;
 
-    public ProductsAdapter(Context mCtx, List<Product> productList) {
+    public JsonAdapter(Context mCtx, List<Product> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
     }
 
     @Override
-    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public JsonAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.product_list, null);
-        return new ProductViewHolder(view);
+        return new JsonAdapter.ProductViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ProductViewHolder holder, int position) {
+    public void onBindViewHolder(JsonAdapter.ProductViewHolder holder, int position) {
         final Product product = productList.get(position);
 
-        Glide.with(mCtx)
-                .load(product.getImage())
-                .into(holder.imageView);
+
 
         holder.textViewFoodName.setText(product.getFood_name());
         holder.textViewPrice.setText(String.valueOf(product.getPrice()));
-        holder.textViewResturantName.setText(product.getResturant_name());
-        holder.textViewRating.setText(product.getRating());
+        holder.textViewResturantName.setText(String.valueOf(product.getId()));
 
-        Log.d("TAG", "name: "+ product.getImage() ) ;
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mCtx, FoodDetailsActivity.class) ;
-                intent.putExtra("foodName", product.getFood_name()) ;
-                intent.putExtra("price", String.valueOf(product.getPrice())) ;
-                intent.putExtra("resturantName", product.getResturant_name()) ;
-                intent.putExtra("rating", product.getRating()) ;
-                intent.putExtra("image", product.getImage()) ;
-                mCtx.startActivity(intent);
-                Toast.makeText(mCtx, "yes", Toast.LENGTH_SHORT).show();
-            }
-        });
+
+//        Glide.with(mCtx)
+//                .load(product.getImage())
+//                .into(holder.imageView);
+//
+//        holder.textViewFoodName.setText(product.getFood_name());
+//        holder.textViewPrice.setText(String.valueOf(product.getPrice()));
+//        holder.textViewResturantName.setText(product.getResturant_name());
+//        holder.textViewRating.setText(product.getRating());
+//
+//        Log.d("TAG", "name: "+ product.getImage() ) ;
+
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(mCtx, FoodDetailsActivity.class) ;
+//                intent.putExtra("foodName", product.getFood_name()) ;
+//                intent.putExtra("price", String.valueOf(product.getPrice())) ;
+//                intent.putExtra("resturantName", product.getResturant_name()) ;
+//                intent.putExtra("rating", product.getRating()) ;
+//                intent.putExtra("image", product.getImage()) ;
+//                mCtx.startActivity(intent);
+//                Toast.makeText(mCtx, "yes", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 

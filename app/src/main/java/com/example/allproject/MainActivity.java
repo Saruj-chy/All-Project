@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.allproject.Activity.CollapsibleActivity;
 import com.example.allproject.Activity.EmployListActivity;
+import com.example.allproject.Activity.FoodListJsonActivity;
 import com.example.allproject.Activity.FragmentActivity;
 import com.example.allproject.Activity.RecyclerViewActivity;
 import com.example.allproject.Activity.SqLiteDatabaseActivity;
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, SqLiteDatabaseActivity.class));
                 break;
             case R.id.item_f:
-//                startActivity(new Intent(this, UpploadPostActivity.class));
+                startActivity(new Intent(this, FoodListJsonActivity.class));
                 break;
 //            case R.id.item_g:
 //                startActivity(new Intent(this, DepartmentPostActivity.class));

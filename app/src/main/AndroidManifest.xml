@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.EmployDetailsActivity"></activity>
+        <activity android:name=".Activity.FoodListJsonActivity"/>
+        <activity android:name=".Activity.EmployDetailsActivity" />
         <activity android:name=".Activity.WebViewActivity" />
         <activity android:name=".Activity.EmployListActivity" />
         <activity android:name=".Activity.FoodDetailsActivity" />

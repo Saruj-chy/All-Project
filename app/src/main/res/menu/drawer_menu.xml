@@ -38,7 +38,7 @@
         android:id="@+id/item_f"
         android:checkable="true"
         android:icon="@drawable/ic_send"
-        android:title="WebView"
+        android:title="Food List Json Activity"
         />
 
 <!--    <item-->

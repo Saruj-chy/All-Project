@@ -9,6 +9,22 @@ public class Product {
     private String rating;
     private String image;
 
+
+    public Product(int id, String food_name, double price) {
+        this.id = id;
+        this.food_name = food_name;
+        this.price = price;
+    }
+
+
+    public Product(int id, String food_name, double price, String resturant_name, String rating) {
+        this.id = id;
+        this.food_name = food_name;
+        this.price = price;
+        this.resturant_name = resturant_name;
+        this.rating = rating;
+    }
+
     public Product(int id, String food_name, double price, String resturant_name, String rating, String image) {
         this.id = id;
         this.food_name = food_name;
