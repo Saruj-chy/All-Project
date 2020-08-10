@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import com.example.allproject.Activity.LoginActivity;
+import com.example.allproject.Activity.RegistrationActivity;
+
 public class SplashScreenActivity extends AppCompatActivity {
     ProgressBar splashProgress;
     int SPLASH_TIME = 30000;
@@ -32,7 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         entryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mySuperIntent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent mySuperIntent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(mySuperIntent);
                 count = 1;
                 SPLASH_TIME = 0 ;
@@ -50,7 +53,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 if(action==false){
                     Log.d("TAG", "action2: "+action) ;
-                    Intent mySuperIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent mySuperIntent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(mySuperIntent);
 
                     finish();

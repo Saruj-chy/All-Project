@@ -14,65 +14,56 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.allproject.Activity.FoodDetailsActivity;
+import com.example.allproject.Activity.FragmentActivity;
+import com.example.allproject.Activity.GoogleMapActivity;
 import com.example.allproject.Class.Product;
 import com.example.allproject.R;
 
 import java.util.List;
 
-public class JsonAdapter extends RecyclerView.Adapter<JsonAdapter.ProductViewHolder> {
+public class JSONAdapter extends RecyclerView.Adapter<JSONAdapter.ProductViewHolder>  {
 
 
     private Context mCtx;
     private List<Product> productList;
 
-    public JsonAdapter(Context mCtx, List<Product> productList) {
+    public JSONAdapter(Context mCtx, List<Product> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
     }
 
     @Override
-    public JsonAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public JSONAdapter.ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.product_list, null);
-        return new JsonAdapter.ProductViewHolder(view);
+        return new JSONAdapter.ProductViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(JsonAdapter.ProductViewHolder holder, int position) {
+    public void onBindViewHolder(JSONAdapter.ProductViewHolder holder, final int position) {
         final Product product = productList.get(position);
 
-
+        Glide.with(mCtx)
+                .load(product.getImage())
+                .into(holder.imageView);
 
         holder.textViewFoodName.setText(product.getFood_name());
         holder.textViewPrice.setText(String.valueOf(product.getPrice()));
-        holder.textViewResturantName.setText(String.valueOf(product.getId()));
+        holder.textViewResturantName.setText(product.getResturant_name());
+        holder.textViewRating.setText(product.getRating());
 
+        Log.d("TAG", "name: "+ product.getImage() ) ;
 
-
-//        Glide.with(mCtx)
-//                .load(product.getImage())
-//                .into(holder.imageView);
-//
-//        holder.textViewFoodName.setText(product.getFood_name());
-//        holder.textViewPrice.setText(String.valueOf(product.getPrice()));
-//        holder.textViewResturantName.setText(product.getResturant_name());
-//        holder.textViewRating.setText(product.getRating());
-//
-//        Log.d("TAG", "name: "+ product.getImage() ) ;
-
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(mCtx, FoodDetailsActivity.class) ;
-//                intent.putExtra("foodName", product.getFood_name()) ;
-//                intent.putExtra("price", String.valueOf(product.getPrice())) ;
-//                intent.putExtra("resturantName", product.getResturant_name()) ;
-//                intent.putExtra("rating", product.getRating()) ;
-//                intent.putExtra("image", product.getImage()) ;
-//                mCtx.startActivity(intent);
+        holder.textViewResturantName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mCtx, GoogleMapActivity.class) ;
+                intent.putExtra("resturant_name", product.getResturant_name()) ;
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mCtx.startActivity(intent);
 //                Toast.makeText(mCtx, "yes", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+            }
+        });
 
     }
 

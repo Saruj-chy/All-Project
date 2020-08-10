@@ -26,8 +26,10 @@ import com.example.allproject.Activity.FoodListJsonActivity;
 import com.example.allproject.Activity.FragmentActivity;
 import com.example.allproject.Activity.RecyclerViewActivity;
 import com.example.allproject.Activity.SqLiteDatabaseActivity;
+import com.example.allproject.Adapter.JSONAdapter;
 import com.example.allproject.Adapter.ProductsAdapter;
 import com.example.allproject.Class.Product;
+import com.example.allproject.Constant.JsonArray;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -42,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView appName;
     ActionBarDrawerToggle drawerToggle;
 
-
-    private static final String URL_PRODUCTS = "http://10.0.2.2/android/Food_Shop/all_food.php";
     private RecyclerView recyclerView ;
     List<Product> productList;
 
@@ -85,55 +85,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-
     private void loadProducts() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            //converting the string to json array object
-                            JSONArray array = new JSONArray(response);
+        JSONObject jsonResponse;
+        try {
+            jsonResponse = new JSONObject(JsonArray.food_JSON);
+            JSONArray movies = jsonResponse.getJSONArray("employ");
+            for(int i=0;i<movies.length();i++){
+                JSONObject movie = movies.getJSONObject(i);
+                productList.add(new Product(
+                        movie.getInt("id"),
+                        movie.getString("food_name"),
+                        movie.getDouble("price"),
+                        movie.getString("resturant_name"),
+                        movie.getString("rating"),
+                        movie.getString("image")
+                ));
+            }
+            JSONAdapter adapter = new JSONAdapter(getApplicationContext(), productList);
+            recyclerView.setAdapter(adapter);
+            GridLayoutManager manager = new GridLayoutManager(getApplicationContext(), 1, GridLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(manager);
 
-                            //traversing through all the object
-                            for (int i = 0; i < array.length(); i++) {
 
-                                //getting product object from json array
-                                JSONObject product = array.getJSONObject(i);
-
-                                //adding the product to product list
-                                productList.add(new Product(
-                                        product.getInt("id"),
-                                        product.getString("food_name"),
-                                        product.getDouble("price"),
-                                        product.getString("resturant_name"),
-                                        product.getString("rating"),
-                                        product.getString("image")
-                                ));
-                            }
-
-                            ProductsAdapter adapter = new ProductsAdapter(MainActivity.this, productList);
-                            recyclerView.setAdapter(adapter);
-                            GridLayoutManager manager = new GridLayoutManager(getApplicationContext(), 2, GridLayoutManager.VERTICAL, false);
-                            recyclerView.setLayoutManager(manager);
-
-//                            Toast.makeText(MainActivity.this, "successfull", Toast.LENGTH_LONG).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-
-        //adding our stringrequest to queue
-        Volley.newRequestQueue(this).add(stringRequest);
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
+
+
+
+
 
 
     @Override

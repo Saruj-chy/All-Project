@@ -3,7 +3,7 @@ package com.example.allproject.Constant;
 public class JsonArray {
 
     public static String food_JSON = "{'employ': ["+
-            "{'id':1,      'food_name':'Ginger Fast Food',         'price':'1000',         'resturant_name':'Ginger Fast Food Restaurant ',        'rating':'7/10',            'image':'https://bit.ly/33TOBur'     }," +
+            "{'id':1,      'food_name':'Ginger Fast Food',         'price':'1000',         'resturant_name':'Chittagong',        'rating':'7/10',            'image':'https://bit.ly/33TOBur'     }," +
             "{'id':2,       'food_name':'orange Fast Food',       'price':'2000',         'resturant_name':'Sabuj Restaurant ',        'rating':'6/10',            'image':'https://bit.ly/2DOHRCK'     }," +
             "{'id':3,       'food_name':'banena Fast Food',       'price':'3000',         'resturant_name':'Abasik  Restaurant ',        'rating':'8/10',            'image':'https://bit.ly/3ks7B9a'     }," +
             "{'id':4,       'food_name':'pineapple  Fast Food',    'price':'4000',         'resturant_name':'Bijoy Restaurant ',        'rating':'4/10',            'image':'https://bit.ly/2F7nJfZ'     }," +
