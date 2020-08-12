@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,14 +18,19 @@ import com.example.allproject.Class.Members;
 import com.example.allproject.MainActivity;
 import com.example.allproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.allproject.MainActivity.sharedSaved;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -33,20 +39,30 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextView alreadyHaveAccountLink;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference rootRef;
+    private FirebaseFirestore memberFireStore ;
+    private CollectionReference memberRef ;
     String currentId;
 
     List<Members> members;
 
     private ProgressDialog loadingBar;
 
+    //=========   sharedprefarence
+    String SHARED_PREFS = "codeTheme";
+    String state = "";
+    String getState ;
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
         mAuth = FirebaseAuth.getInstance();
-        rootRef = FirebaseDatabase.getInstance().getReference("Members");
+        memberFireStore = FirebaseFirestore.getInstance() ;
+        memberRef = memberFireStore.collection("Members");
 
         initialFields();
 
@@ -54,7 +70,13 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 CreateNewAccount();
-//                addMemberAdded() ;
+            }
+        });
+
+        alreadyHaveAccountLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SendUserToLoginActivity() ;
             }
         });
     }
@@ -100,25 +122,23 @@ public class RegistrationActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
 
-
-
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 currentId = mAuth.getCurrentUser().getUid() ;
-                                Members member = new Members(firstName, lastName, username, email, password) ;
-                                rootRef.child(currentId).setValue(member)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                Clear();
-                                                SendUserToMainActivity();
-                                                Toast.makeText(RegistrationActivity.this, "Account created Successfully", Toast.LENGTH_SHORT).show();
-                                                loadingBar.dismiss();
-                                            }
-                                        });
+                                Members member = new Members(currentId, firstName, lastName, username, email, password, "user") ;
+                                sharedSaved(sharedPreferences, state, "user") ;
+
+                                memberRef.document(currentId).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Clear();
+                                        SentRegisterToUserActivity();
+                                        Toast.makeText(RegistrationActivity.this, "Account created Successfully", Toast.LENGTH_SHORT).show();
+                                        loadingBar.dismiss();                                    }
+                                }) ;
 
                             }
                             else{
@@ -140,10 +160,15 @@ public class RegistrationActivity extends AppCompatActivity {
         userConfirmPassword.setText("");
     }
 
-    private void SendUserToMainActivity() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    private void SentRegisterToUserActivity() {
+        Intent intent = new Intent(getApplicationContext(), UserActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    private void SendUserToLoginActivity() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
     }
 }

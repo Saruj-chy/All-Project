@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ProfileActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout1"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/background_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_alignParentTop="@+id/relativeLayout1"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/environment"
+                    android:layout_below="@+id/relativeLayout1"
+                    tools:ignore="NotSibling" />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/visit_profile_image"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_below="@+id/relativeLayout1"
+                    android:layout_alignParentTop="@+id/relativeLayout1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
+                    android:src="@drawable/profile_image"
+                    tools:ignore="NotSibling" />
+
+                <LinearLayout
+                    android:id="@+id/fullNameLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentTop="@+id/visit_profile_image"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/visit_profile_image"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full Name:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <TextView
+                        android:id="@+id/fullNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/userNameLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="@+id/fullNameLinear"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/fullNameLinear"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UserName:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <TextView
+                        android:id="@+id/userNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/emailLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="@+id/userNameLinear"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/userNameLinear"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <TextView
+                        android:id="@+id/emailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/passwordLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="@+id/emailLinear"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/emailLinear"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <TextView
+                        android:id="@+id/passwordTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/updateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/passwordLinear"
+                    android:layout_marginTop="20dp"
+                    android:text="Update Profile"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:textAllCaps="true"
+                    android:background="@drawable/buttons"
+                    />
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/background_image2"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_alignParentTop="@+id/relativeLayout1"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/environment"
+                    android:layout_below="@+id/relativeLayout1"
+                    tools:ignore="NotSibling" />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/visit_profile_image2"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_below="@+id/relativeLayout1"
+                    android:layout_alignParentTop="@+id/relativeLayout2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
+                    android:src="@drawable/profile_image"
+                    tools:ignore="NotSibling" />
+
+                <LinearLayout
+                    android:id="@+id/firstNameLinear2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentTop="@+id/visit_profile_image2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/visit_profile_image2"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full Name:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <EditText
+                        android:id="@+id/firstNameEditText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter First Name"
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lastNameLinear2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentTop="@+id/firstNameLinear2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/firstNameLinear2"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full Name:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <EditText
+                        android:id="@+id/lastNameEditText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Last Name"
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/userNameLinear2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="@+id/lastNameLinear2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/lastNameLinear2"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UserName:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <EditText
+                        android:id="@+id/userNameEditText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter User Name"
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/emailLinear2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="@+id/userNameLinear2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/userNameLinear2"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <EditText
+                        android:id="@+id/emailEditText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Email"
+                        android:textSize="20dp"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/passwordLinear2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="@+id/emailLinear2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/emailLinear2"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password:  "
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        />
+                    <EditText
+                        android:id="@+id/passwordEditText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:hint="Enter Password"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/updateButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/passwordLinear2"
+                    android:layout_marginTop="20dp"
+                    android:text="Update"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:textAllCaps="true"
+                    android:background="@drawable/buttons"
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

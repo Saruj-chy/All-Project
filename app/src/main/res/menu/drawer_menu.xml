@@ -33,6 +33,7 @@
         android:checkable="true"
         android:icon="@drawable/ic_send"
         android:title="SqliteDatabase"
+        android:visible="false"
         />
     <item
         android:id="@+id/item_f"
@@ -40,11 +41,17 @@
         android:icon="@drawable/ic_send"
         android:title="Food List Json Activity"
         />
+    <item
+        android:id="@+id/item_g"
+        android:checkable="true"
+        android:icon="@drawable/ic_send"
+        android:title="Active Employ"
+        />
 
-<!--    <item-->
-<!--        android:id="@+id/item_g"-->
-<!--        android:checkable="true"-->
-<!--        android:icon="@android:drawable/ic_menu_upload"-->
-<!--        android:title="Retrive Post"-->
-<!--        />-->
+    <item
+        android:id="@+id/item_h"
+        android:checkable="true"
+        android:icon="@drawable/ic_person"
+        android:title="Log Out"
+        />
 </menu>

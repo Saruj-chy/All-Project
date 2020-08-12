@@ -2,21 +2,45 @@ package com.example.allproject.Class;
 
 public class Members {
 
+    String currentId ;
     String memberFirstName ;
     String memberLastName ;
     String memberUserName ;
     String memberEmail ;
     String memberPassword;
+    String memberState ;
+    String memberProfileImage;
 
     public Members() {
     }
 
-    public Members(String memberFirstName, String memberLastName, String memberUserName, String memberEmail, String memberPassword) {
+    public Members(String currentId, String memberFirstName, String memberLastName, String memberUserName, String memberEmail, String memberPassword, String memberState) {
+        this.currentId = currentId;
         this.memberFirstName = memberFirstName;
         this.memberLastName = memberLastName;
         this.memberUserName = memberUserName;
         this.memberEmail = memberEmail;
         this.memberPassword = memberPassword;
+        this.memberState = memberState;
+    }
+
+    public Members(String currentId, String memberFirstName, String memberLastName, String memberUserName, String memberEmail, String memberPassword, String memberState, String memberProfileImage) {
+        this.currentId = currentId;
+        this.memberFirstName = memberFirstName;
+        this.memberLastName = memberLastName;
+        this.memberUserName = memberUserName;
+        this.memberEmail = memberEmail;
+        this.memberPassword = memberPassword;
+        this.memberState = memberState;
+        this.memberProfileImage = memberProfileImage;
+    }
+
+    public String getCurrentId() {
+        return currentId;
+    }
+
+    public void setCurrentId(String currentId) {
+        this.currentId = currentId;
     }
 
     public String getMemberFirstName() {
@@ -59,26 +83,21 @@ public class Members {
         this.memberPassword = memberPassword;
     }
 
-
-
-
-
-    String memberStatus;
-    String memberImage;
-
-    public String getMemberStatus() {
-        return memberStatus;
+    public String getMemberState() {
+        return memberState;
     }
 
-    public void setMemberStatus(String memberStatus) {
-        this.memberStatus = memberStatus;
+    public void setMemberState(String memberState) {
+        this.memberState = memberState;
     }
 
-    public String getMemberImage() {
-        return memberImage;
+    public String getMemberProfileImage() {
+        return memberProfileImage;
     }
 
-    public void setMemberImage(String memberImage) {
-        this.memberImage = memberImage;
+    public void setMemberProfileImage(String memberProfileImage) {
+        this.memberProfileImage = memberProfileImage;
     }
+
+
 }

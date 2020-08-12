@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -16,21 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.GoogleMapActivity"/>
+        <activity android:name=".Activity.ActiveEmployActivity"></activity>
+        <activity android:name=".Activity.ProfileActivity" />
+        <activity android:name=".Activity.TestActivity" />
+        <activity android:name=".Activity.GoogleMapActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.RegistrationActivity" />
         <activity android:name=".Activity.FoodListJsonActivity" />
-        <activity android:name=".Activity.EmployDetailsActivity" />
         <activity android:name=".Activity.WebViewActivity" />
         <activity android:name=".Activity.EmployListActivity" />
         <activity android:name=".Activity.FoodDetailsActivity" />
-        <activity android:name=".Activity.SqLiteDatabaseActivity" />
-        <activity android:name=".Activity.RecyclerViewActivity" />
-        <activity
-            android:name=".Activity.CollapsibleActivity"
-            android:theme="@style/mainTheme" />
         <activity android:name=".Activity.FragmentActivity" />
-        <activity android:name=".Activity.LifeCycleActivity" />
+        <activity android:name=".Activity.UserActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/mainTheme" />
@@ -47,7 +43,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
-
     </application>
 
 </manifest>

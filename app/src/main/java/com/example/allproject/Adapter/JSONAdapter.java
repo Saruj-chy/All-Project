@@ -59,6 +59,7 @@ public class JSONAdapter extends RecyclerView.Adapter<JSONAdapter.ProductViewHol
             public void onClick(View view) {
                 Intent intent = new Intent(mCtx, GoogleMapActivity.class) ;
                 intent.putExtra("resturant_name", product.getResturant_name()) ;
+                intent.putExtra("location", "resturantLocation") ;
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mCtx.startActivity(intent);
 //                Toast.makeText(mCtx, "yes", Toast.LENGTH_SHORT).show();

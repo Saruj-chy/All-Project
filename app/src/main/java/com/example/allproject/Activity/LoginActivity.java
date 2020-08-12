@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,12 +18,23 @@ import android.widget.Toast;
 import com.example.allproject.MainActivity;
 import com.example.allproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import static com.example.allproject.MainActivity.sharedSaved;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,9 +45,17 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentUserId;
     private FirebaseUser currentUSer ;
-    private DatabaseReference rootRef;
+    private CollectionReference memberRef ;
 
     private ProgressDialog loadingBar;
+    private String memberState ;
+
+    //=========   sharedprefarence
+    String SHARED_PREFS = "codeTheme";
+    String state = "";
+    String getState ;
+    SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +63,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        rootRef = FirebaseDatabase.getInstance().getReference("Members");
+        memberRef = FirebaseFirestore.getInstance().collection("Members");
         currentUSer = mAuth.getCurrentUser() ;
+
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
 
         initialFields();
@@ -91,8 +114,33 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                SendUserToMainActivity();
                                 currentUserId = mAuth.getCurrentUser().getUid() ;
+
+                                memberRef.document(currentUserId).get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                if (documentSnapshot.exists()) {
+                                                    memberState = documentSnapshot.getString("memberState");
+                                                    sharedSaved(sharedPreferences, state, memberState) ;
+                                                    if(memberState.equals("admin")){
+                                                        SendUserToMainActivity();
+                                                    } else{
+                                                        SendUserToFragmentActivity();
+                                                    }
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_SHORT).show();
+                                                Log.d("TAG", e.toString());
+                                            }
+                                        });
+
+                                Log.d("TAG","state: "+ memberState) ;
+
                                 Toast.makeText(LoginActivity.this, "CurrentUserId: "+currentUserId, Toast.LENGTH_SHORT).show();
                             }
                             else{
@@ -108,8 +156,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(currentUSer != null){
+        getState = sharedPreferences.getString(state, "");
+        Log.d("TAG", "memstate: "+memberState) ;
+        Log.d("TAG", "state: "+getState) ;
+        if(currentUSer != null && getState.equals("admin")){
             SendUserToMainActivity();
+        }
+        else if(currentUSer != null){
+            SendUserToFragmentActivity();
         }
     }
 
@@ -135,4 +189,13 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    private void SendUserToFragmentActivity() {
+        Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+
+
 }

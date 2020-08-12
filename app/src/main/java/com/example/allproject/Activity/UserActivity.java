@@ -1,49 +1,37 @@
-package com.example.allproject;
+package com.example.allproject.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.allproject.Activity.ActiveEmployActivity;
-import com.example.allproject.Activity.EmployListActivity;
-import com.example.allproject.Activity.FoodListJsonActivity;
-import com.example.allproject.Activity.FragmentActivity;
-import com.example.allproject.Activity.LoginActivity;
-import com.example.allproject.Activity.RegistrationActivity;
 import com.example.allproject.Adapter.JSONAdapter;
 import com.example.allproject.Class.Product;
 import com.example.allproject.Constant.JsonArray;
+import com.example.allproject.MainActivity;
+import com.example.allproject.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
@@ -54,26 +42,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    DrawerLayout drawerLayout;
-    TextView appName;
-    ActionBarDrawerToggle drawerToggle;
+public class UserActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView ;
     List<Product> productList;
 
-    private FirebaseAuth mAuth;
-    private String currentUserId;
-    private CollectionReference userRef ;
+    FirebaseAuth mAuth ;
+    private CollectionReference userRef, memberRef ;
+    String currentId;
 
-
-    //=========   sharedprefarence
-    static String SHARED_PREFS = "codeTheme";
-    String state = "";
-    String getState ;
-    SharedPreferences sharedPreferences;
-
-    //=====  for location
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
@@ -81,22 +58,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_life_cycle);
 
-        Toolbar toolbar = findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("All Project");
-
-        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-
-        mAuth = FirebaseAuth.getInstance() ;
-        currentUserId = mAuth.getCurrentUser().getUid() ;
+        mAuth = FirebaseAuth.getInstance();
+        currentId= mAuth.getUid() ;
         userRef = FirebaseFirestore.getInstance().collection("Location");
+        memberRef = FirebaseFirestore.getInstance().collection("Members");
 
-
-        recyclerView = findViewById(R.id.recyclerView) ;
+        recyclerView = findViewById(R.id.userRecyclerView) ;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -104,28 +74,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         loadProducts();
 
-
-
-
-
-
         //====    location user
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         GetLocation("online");
 
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.header);
-
-        navigationView.setNavigationItemSelectedListener(this);
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.drawer_open,R.string.drawer_close);
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-
-
 
     }
+
+
 
     private void loadProducts() {
         JSONObject jsonResponse;
@@ -155,81 +112,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GetLocation("online");
-//        Toast.makeText(this, "onStatrt", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        GetLocation("online");
-//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        GetLocation("online");
-//        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-          return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        String itemName = (String) item.getTitle();
-
-        // tvInfo.setText(itemName);
-
-        closeDrawer();
-
-
-        switch (item.getItemId()){
-            case R.id.item_a:
-                startActivity(new Intent(this, EmployListActivity.class));
-                break;
-            case R.id.item_b:
-                startActivity(new Intent(this, FragmentActivity.class));
-                break;
-//            case R.id.item_c:
-//                startActivity(new Intent(this, CollapsibleActivity.class));
-//                break;
-//            case R.id.item_d:
-//                startActivity(new Intent(this, RecyclerViewActivity.class));
-//                break;
-//            case R.id.item_e:
-//                startActivity(new Intent(this, SqLiteDatabaseActivity.class));
-//                break;
-            case R.id.item_f:
-                startActivity(new Intent(this, FoodListJsonActivity.class));
-                break;
-            case R.id.item_g:  //log out
-                startActivity(new Intent(this, ActiveEmployActivity.class));
-
-                break;
-            case R.id.item_h:  //log out
-                sendUserToLoginActivity();
-                mAuth.signOut();
-                break;
-
-        }
-
-
-        return false;
-    }
-
-
-
-    //===========    for location
     private void GetLocation(final String onlineState) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -246,6 +128,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(location  != null){
                     currentLocation = location;
                     setDatabaseStorage(currentLocation.getLatitude(), currentLocation.getLongitude(),onlineState);
+
+//                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude()+" "+
+//                            currentLocation.getLongitude(), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -260,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         memberLocation.put("onlineState", onlineState );
 
 
-        userRef.document(currentUserId).set(memberLocation);
+        userRef.document(currentId).set(memberLocation);
 
     }
 
@@ -281,29 +166,101 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void sendUserToLoginActivity() {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
-    }
 
-    private void closeDrawer() {
-        drawerLayout.closeDrawer(GravityCompat.START);
-    }
-    private void openDrawer() {
-        drawerLayout.openDrawer(GravityCompat.START);
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.user_menu, menu);
+        return true;
     }
 
     @Override
-    public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            closeDrawer();
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.user_profile_menu){
+            sendUserToProfileActivity();
         }
-        super.onBackPressed();
+        if (item.getItemId() == R.id.user_logout_menu){
+
+            mAuth.signOut();
+            sendUserToLoginActivity();
+        }
+        return true;
     }
 
-   public static void sharedSaved(SharedPreferences sharedPreferences, String state, String memberState){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(state, memberState);
-        editor.apply();
+
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        WhereToGo();
+        GetLocation("online");
+//        Toast.makeText(this, "App now onStart mode", Toast.LENGTH_SHORT).show();
+    }
+
+    private void WhereToGo() {
+        memberRef.document(currentId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()) {
+                    String memberState = documentSnapshot.getString("memberState");
+                    if(memberState.equals("admin")){
+                        mAuth.signOut();
+                    }
+                }
+            }
+        });
+    }
+
+    //
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Toast.makeText(this, "App now onResume mode", Toast.LENGTH_SHORT).show();
+//
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        Toast.makeText(this, "App now onPause mode", Toast.LENGTH_SHORT).show();
+//
+//    }
+//
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        Toast.makeText(this, "App now onRestart mode", Toast.LENGTH_SHORT).show();
+//
+//    }
+//
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GetLocation("offline");
+//        Toast.makeText(this, "App now onStop mode", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GetLocation("offline");
+//        Toast.makeText(this, "App now onDestroy mode", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void sendUserToProfileActivity() {
+        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivity(intent);
+    }
+
+
+    private void sendUserToLoginActivity() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
     }
 }

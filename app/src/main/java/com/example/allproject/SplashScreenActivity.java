@@ -16,7 +16,7 @@ import com.example.allproject.Activity.RegistrationActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
     ProgressBar splashProgress;
-    int SPLASH_TIME = 30000;
+    int SPLASH_TIME = 3000;
 
     private boolean action = false;
 
