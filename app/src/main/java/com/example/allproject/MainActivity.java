@@ -19,16 +19,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.allproject.Activity.ActiveEmployActivity;
 import com.example.allproject.Activity.EmployListActivity;
 import com.example.allproject.Activity.FoodListJsonActivity;
 import com.example.allproject.Activity.FragmentActivity;
 import com.example.allproject.Activity.LoginActivity;
-import com.example.allproject.Activity.RegistrationActivity;
+import com.example.allproject.Activity.ProfileActivity;
+import com.example.allproject.Activity.TestActivity;
 import com.example.allproject.Adapter.JSONAdapter;
 import com.example.allproject.Class.Product;
 import com.example.allproject.Constant.JsonArray;
@@ -38,13 +40,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,22 +54,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
-    TextView appName;
     ActionBarDrawerToggle drawerToggle;
+    String drawerImageUrl, drawerUserName, drawerStatus ;
 
     private RecyclerView recyclerView ;
     List<Product> productList;
 
     private FirebaseAuth mAuth;
     private String currentUserId;
-    private CollectionReference userRef ;
+    private FirebaseFirestore userFireStore ;
 
 
     //=========   sharedprefarence
     static String SHARED_PREFS = "codeTheme";
-    String state = "";
+    String state = "state";
     String getState ;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences,  sharedPreferences1, sharedPreferences2, sharedPreferences3;
 
     //=====  for location
     Location currentLocation;
@@ -90,10 +88,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setTitle("All Project");
 
         sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        sharedPreferences1 = getSharedPreferences("userName", MODE_PRIVATE);
+        sharedPreferences2 = getSharedPreferences("status", MODE_PRIVATE);
+        sharedPreferences3 = getSharedPreferences("image", MODE_PRIVATE);
 
         mAuth = FirebaseAuth.getInstance() ;
         currentUserId = mAuth.getCurrentUser().getUid() ;
-        userRef = FirebaseFirestore.getInstance().collection("Location");
+        userFireStore = FirebaseFirestore.getInstance();
 
 
         recyclerView = findViewById(R.id.recyclerView) ;
@@ -104,10 +105,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         loadProducts();
 
+        DrawerProfileRef();
 
-
-
-
+        drawerUserName = sharedPreferences1.getString("userName", "userName");
+        drawerStatus = sharedPreferences2.getString("status", "user");
+        drawerImageUrl = sharedPreferences3.getString("image", "image");
 
         //====    location user
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -117,6 +119,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.header);
 
+        //=======   drawer_header
+        View headerview = navigationView.getHeaderView(0);
+        ImageView drawerImage = headerview.findViewById(R.id.drawer_image);
+        TextView drawerUserTV = (TextView) headerview.findViewById(R.id.drawer_userName);
+        TextView drawerStatusTV = (TextView) headerview.findViewById(R.id.drawer_status);
+        Log.d("user","name1: "+drawerUserName+" "+ drawerStatus) ;
+        drawerUserTV.setText(drawerUserName);
+        drawerStatusTV.setText(drawerStatus);
+        Picasso.get().load(drawerImageUrl)
+                .placeholder(R.drawable.profile_image)
+                .into(drawerImage);
+        headerview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //======  drawer_menu
         navigationView.setNavigationItemSelectedListener(this);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.drawer_open,R.string.drawer_close);
@@ -125,6 +147,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+    }
+
+    private void DrawerProfileRef() {
+        userFireStore.collection("Members").document(currentUserId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot.exists()){
+                            drawerUserName = documentSnapshot.getString("memberUserName") ;
+                            drawerStatus = documentSnapshot.getString("memberState") ;
+
+                            sharedSaved(sharedPreferences1,"userName", drawerUserName);
+                            sharedSaved(sharedPreferences2,"status", drawerStatus);
+                            sharedSaved(sharedPreferences3,"image", drawerStatus);
+
+                            if(documentSnapshot.contains("memberProfileImage")){
+                                drawerImageUrl = documentSnapshot.getString("memberProfileImage") ;
+                                sharedSaved(sharedPreferences3,"image", drawerImageUrl);
+                            }
+                        }
+                    }
+                });
     }
 
     private void loadProducts() {
@@ -159,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
+        DrawerProfileRef();
         GetLocation("online");
 //        Toast.makeText(this, "onStatrt", Toast.LENGTH_SHORT).show();
 
@@ -194,29 +239,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         switch (item.getItemId()){
-            case R.id.item_a:
+            case R.id.item_employ_details:
                 startActivity(new Intent(this, EmployListActivity.class));
+                break;
+            case R.id.item_volley:
+                startActivity(new Intent(this, FoodListJsonActivity.class));
+                break;
+            case R.id.item_active_employ:  //log out
+                startActivity(new Intent(this, ActiveEmployActivity.class));
                 break;
             case R.id.item_b:
                 startActivity(new Intent(this, FragmentActivity.class));
                 break;
-//            case R.id.item_c:
-//                startActivity(new Intent(this, CollapsibleActivity.class));
-//                break;
+            case R.id.item_c:
+                startActivity(new Intent(this, TestActivity.class));
+                break;
 //            case R.id.item_d:
 //                startActivity(new Intent(this, RecyclerViewActivity.class));
 //                break;
 //            case R.id.item_e:
 //                startActivity(new Intent(this, SqLiteDatabaseActivity.class));
 //                break;
-            case R.id.item_f:
-                startActivity(new Intent(this, FoodListJsonActivity.class));
-                break;
-            case R.id.item_g:  //log out
-                startActivity(new Intent(this, ActiveEmployActivity.class));
 
-                break;
-            case R.id.item_h:  //log out
+            case R.id.item_log_out:  //log out
                 sendUserToLoginActivity();
                 mAuth.signOut();
                 break;
@@ -250,21 +295,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-
     private void setDatabaseStorage(double latitude, double longitude, String onlineState) {
-
-
         HashMap<String, Object> memberLocation = new HashMap<>();
         memberLocation.put("latitude", latitude );
         memberLocation.put("longitude",longitude);
         memberLocation.put("onlineState", onlineState );
 
-
-        userRef.document(currentUserId).set(memberLocation);
-
-    }
-
-    @Override
+        userFireStore.collection("Location").document(currentUserId).set(memberLocation);
+    }    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case REQUEST_CODE:

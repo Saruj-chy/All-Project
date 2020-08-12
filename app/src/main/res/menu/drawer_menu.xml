@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/item_a"
+        android:id="@+id/item_employ_details"
         android:checkable="true"
         android:icon="@drawable/ic_send"
         android:title="Employ Details"
+        />
+    <item
+        android:id="@+id/item_volley"
+        android:checkable="true"
+        android:icon="@drawable/ic_send"
+        android:title="Employ-Database-Volley"
+        />
+    <item
+        android:id="@+id/item_active_employ"
+        android:checkable="true"
+        android:icon="@drawable/ic_send"
+        android:title="Active Employ Show"
         />
 
     <item
@@ -12,6 +25,8 @@
         android:checkable="true"
         android:icon="@drawable/ic_send"
         android:title="Fragment"
+        android:visible="false"
+
         />
 
     <item
@@ -19,6 +34,7 @@
         android:checkable="true"
         android:icon="@drawable/ic_send"
         android:title="Collapsible"
+        android:visible="false"
         />
 
     <item
@@ -26,6 +42,7 @@
         android:checkable="true"
         android:icon="@drawable/ic_send"
         android:title="RecyclerView "
+        android:visible="false"
         />
 
     <item
@@ -35,21 +52,11 @@
         android:title="SqliteDatabase"
         android:visible="false"
         />
-    <item
-        android:id="@+id/item_f"
-        android:checkable="true"
-        android:icon="@drawable/ic_send"
-        android:title="Food List Json Activity"
-        />
-    <item
-        android:id="@+id/item_g"
-        android:checkable="true"
-        android:icon="@drawable/ic_send"
-        android:title="Active Employ"
-        />
+
+
 
     <item
-        android:id="@+id/item_h"
+        android:id="@+id/item_log_out"
         android:checkable="true"
         android:icon="@drawable/ic_person"
         android:title="Log Out"

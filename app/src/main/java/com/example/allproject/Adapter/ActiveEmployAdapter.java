@@ -1,7 +1,9 @@
 package com.example.allproject.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.allproject.Activity.EmployListActivity;
 import com.example.allproject.Activity.GoogleMapActivity;
+import com.example.allproject.Activity.WebViewActivity;
 import com.example.allproject.Class.Employ;
 import com.example.allproject.Class.Members;
 import com.example.allproject.R;
@@ -32,7 +37,8 @@ public class ActiveEmployAdapter extends RecyclerView.Adapter<ActiveEmployAdapte
 
     private Context mCtx;
     private List<Members> productList;
-    private CollectionReference profileRef ;
+    private FirebaseFirestore profileFireSTore ;
+    private AlertDialog.Builder clickBuilder;
 
     public ActiveEmployAdapter(Context mCtx, List<Members> productList) {
         this.mCtx = mCtx;
@@ -48,12 +54,13 @@ public class ActiveEmployAdapter extends RecyclerView.Adapter<ActiveEmployAdapte
 
 
     @Override
-    public void onBindViewHolder(final ActiveEmployAdapter.EmployViewHolder holder, int position) {
+    public void onBindViewHolder(final ActiveEmployAdapter.EmployViewHolder holder, final int position) {
         final Members members = productList.get(position);
 
-        profileRef = FirebaseFirestore.getInstance().collection("Location");
+        clickBuilder =new AlertDialog.Builder(mCtx);
+        profileFireSTore = FirebaseFirestore.getInstance();
         Log.d("id", "id: "+members.getCurrentId()) ;
-        profileRef.document(members.getCurrentId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        profileFireSTore.collection("Location").document(members.getCurrentId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
@@ -80,9 +87,46 @@ public class ActiveEmployAdapter extends RecyclerView.Adapter<ActiveEmployAdapte
                             Toast.makeText(mCtx, "yes", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+
                 }
             }
         });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+//                CharSequence options[] = new CharSequence[]
+//                        {
+//                                "user",
+//                                "admin"
+//                        };
+//
+//                clickBuilder.setTitle("Select Any Test?") ;
+//
+//                clickBuilder.setItems(options, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                });
+//                clickBuilder.show() ;
+                profileFireSTore.collection("Members").document(members.getCurrentId())
+                        .update("memberState","admin")
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(mCtx, "Updated by admin", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                Log.d("long", "id:"+position+" "+ members.getCurrentId());
+                return true;
+            }
+        });
+
+
 
 
         Picasso.get().load(members.getMemberProfileImage())

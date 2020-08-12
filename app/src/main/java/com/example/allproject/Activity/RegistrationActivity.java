@@ -49,7 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     //=========   sharedprefarence
     String SHARED_PREFS = "codeTheme";
-    String state = "";
+    String state = "state";
     String getState ;
     SharedPreferences sharedPreferences;
 

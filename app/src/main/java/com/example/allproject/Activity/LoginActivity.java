@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,9 +39,9 @@ import static com.example.allproject.MainActivity.sharedSaved;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button loginButton, phoneLoginButton;
-    private EditText userEmail, userPassword;
-    private TextView needNewAccountLink, forgetPasswordLink;
+    private Button loginButton;
+    private TextInputEditText userEmail, userPassword;
+    private TextView needNewAccountLink;
 
     private FirebaseAuth mAuth;
     private String currentUserId;
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //=========   sharedprefarence
     String SHARED_PREFS = "codeTheme";
-    String state = "";
+    String state = "state";
     String getState ;
     SharedPreferences sharedPreferences;
 
@@ -83,14 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                 AllowUserToLogn();
             }
         });
-
-//        phoneLoginButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), PhoneLoginActivity.class));
-//            }
-//        });
-
     }
 
     private void AllowUserToLogn() {
@@ -141,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Log.d("TAG","state: "+ memberState) ;
 
-                                Toast.makeText(LoginActivity.this, "CurrentUserId: "+currentUserId, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(LoginActivity.this, "CurrentUserId: "+currentUserId, Toast.LENGTH_SHORT).show();
                             }
                             else{
                                 String message = task.getException().toString();
@@ -157,8 +150,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         getState = sharedPreferences.getString(state, "");
-        Log.d("TAG", "memstate: "+memberState) ;
-        Log.d("TAG", "state: "+getState) ;
+        Log.d("TAGs", "memstate: "+memberState) ;
+        Log.d("TAGs", "state: "+getState) ;
+//        Toast.makeText(this, "state: "+getState, Toast.LENGTH_SHORT).show();
         if(currentUSer != null && getState.equals("admin")){
             SendUserToMainActivity();
         }
@@ -169,12 +163,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initialFields() {
         loginButton = findViewById(R.id.login_button);
-        phoneLoginButton = findViewById(R.id.phone_login_button);
 
-        userEmail = findViewById(R.id.login_email);
-        userPassword = findViewById(R.id.login_password);
+        userEmail = findViewById(R.id.login_email_input_text);
+        userPassword = findViewById(R.id.login_password_input_text);
         needNewAccountLink = findViewById(R.id.need_new_account_link);
-        forgetPasswordLink = findViewById(R.id.forget_password);
 
         loadingBar = new ProgressDialog(this);
     }

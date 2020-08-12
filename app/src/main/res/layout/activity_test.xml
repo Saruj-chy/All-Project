@@ -1,19 +1,197 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.TestActivity">
+    android:fitsSystemWindows="true"
+    >
 
-    <EditText
-        android:id="@+id/locateEditText"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="location"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        android:layout_height="400dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="@android:color/black"
+            android:layout_gravity="center"
+
+            android:background="@drawable/environment"
+            app:title="Login Activity"
+           >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_margin="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/login_email_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/login_image"
+                    android:background="@drawable/input"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="17dp"
+                    >
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/login_email_input_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Your Email"
+                        android:inputType="textEmailAddress"
+                        android:layout_alignParentStart="true"
+                        android:padding="10dp"
+                        android:drawableStart="@drawable/ic_email"
+
+                    />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/login_password_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/login_email_input_layout"
+
+                    android:background="@drawable/input"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="17dp"
+                    >
+
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/login_password_input_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Your Password"
+                        android:inputType="textPassword"
+                        android:layout_alignParentStart="true"
+                        android:padding="10dp"
+                        android:drawableStart="@drawable/password"
+
+                        />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/forget_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/login_password_input_layout"
+                    android:text="Forget Password?"
+                    android:textAlignment="textEnd"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="23dp"
+                    android:visibility="invisible"
+                    />
+
+                <Button
+                    android:id="@+id/login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/forget_password"
+                    android:padding="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginRight="19dp"
+                    android:background="@drawable/buttons"
+                    android:text="Login"
+                    android:textAllCaps="false"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/background_light"
+                    />
+
+                <TextView
+                    android:id="@+id/need_new_account_link"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/login_button"
+                    android:text="Need new Account"
+                    android:textAlignment="center"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="23dp"
+                    />
+                <TextView
+                    android:id="@+id/login_using"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/need_new_account_link"
+                    android:text="or Login using your "
+                    android:textAlignment="center"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="23dp"
+                    android:visibility="invisible"
+                    />
+                <Button
+                    android:id="@+id/phone_login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/login_using"
+                    android:padding="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginRight="19dp"
+                    android:background="@drawable/buttons"
+                    android:text="Phone"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/background_light"
+                    android:drawableStart="@drawable/phone"
+                    android:visibility="invisible"
+                    />
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
