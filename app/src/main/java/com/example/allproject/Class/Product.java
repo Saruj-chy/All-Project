@@ -3,14 +3,16 @@ package com.example.allproject.Class;
 public class Product {
 
     private int id;
+
     private String food_name;
     private double price;
+
     private String resturant_name;
     private String rating;
     private String image;
 
-
-
+    public Product() {
+    }
 
     public Product(int id, String food_name, double price, String resturant_name, String rating, String image) {
         this.id = id;
@@ -20,6 +22,8 @@ public class Product {
         this.rating = rating;
         this.image = image;
     }
+
+
 
     public int getId() {
         return id;
@@ -67,5 +71,34 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    //==   for postProductActivity
+    private String currentId;
+    private String totalPrice;
+
+    public Product(String currentId, String food_name, String totalPrice, String resturant_name, String rating, String image) {
+        this.currentId = currentId;
+        this.food_name = food_name;
+        this.totalPrice = totalPrice;
+        this.resturant_name = resturant_name;
+        this.rating = rating;
+        this.image = image;
+    }
+
+    public String getCurrentId() {
+        return currentId;
+    }
+
+    public void setCurrentId(String currentId) {
+        this.currentId = currentId;
+    }
+
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

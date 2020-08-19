@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.allproject.Adapter.ActiveEmployAdapter;
-import com.example.allproject.Adapter.JSONAdapter;
+import com.example.allproject.Adapter.PostProductListAdapter;
 import com.example.allproject.Class.Members;
 import com.example.allproject.Class.Product;
 import com.example.allproject.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,58 +24,57 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActiveEmployActivity extends AppCompatActivity {
+public class PostProductListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView ;
-    List<Members> memberList;
+    List<Product> productList;
 
-    private CollectionReference memberRef ;
+    private CollectionReference productRef ;
+    String currentId ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_active_employ);
+        setContentView(R.layout.activity_post_product_list);
 
-        memberRef = FirebaseFirestore.getInstance().collection("Members");
+        currentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        productRef = FirebaseFirestore.getInstance().collection("ProductPost");
 
-        recyclerView = findViewById(R.id.userActiveRecyclerView) ;
+        recyclerView = findViewById(R.id.productListRecyclerView) ;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        memberList = new ArrayList<>();
+        productList = new ArrayList<>();
 
-        LoadMembersList();
+        LoadProductList();
+
     }
 
-    private void LoadMembersList() {
-        memberRef.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+    private void LoadProductList() {
+        productRef.document().collection("post").addSnapshotListener(this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
                 if (e != null) {
                     return;
                 }
-                String data = "";
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                    Members member = documentSnapshot.toObject(Members.class);
-                    memberList.add(new Members(
-                            member.getCurrentId(),
-                            member.getMemberFirstName(),
-                            member.getMemberLastName(),
-                            member.getMemberUserName(),
-                            member.getMemberEmail(),
-                            member.getMemberPassword(),
-                            member.getMemberState(),
-                            member.getMemberProfileImage()
+                    Product products = documentSnapshot.toObject(Product.class);
+
+                    productList.add(new Product(
+                            products.getCurrentId(),
+                            products.getFood_name(),
+                            products.getTotalPrice(),
+                            products.getResturant_name(),
+                            products.getRating(),
+                            products.getImage()
                     ));
 
                 }
-                Log.d("TAG", "memberList: "+memberList ) ;
-                ActiveEmployAdapter adapter = new ActiveEmployAdapter(getApplicationContext(), memberList);
+                PostProductListAdapter adapter = new PostProductListAdapter(getApplicationContext(), productList);
                 recyclerView.setAdapter(adapter);
                 GridLayoutManager manager = new GridLayoutManager(getApplicationContext(), 1, GridLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(manager);
 
-//                textViewData.setText(data);
             }
         });
     }

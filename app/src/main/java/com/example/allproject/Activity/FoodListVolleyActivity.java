@@ -12,11 +12,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.allproject.Adapter.JSONAdapter;
 import com.example.allproject.Adapter.ProductsAdapter;
 import com.example.allproject.Class.Product;
-import com.example.allproject.Constant.JsonArray;
-import com.example.allproject.MainActivity;
 import com.example.allproject.R;
 
 import org.json.JSONArray;
@@ -26,7 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FoodListJsonActivity extends AppCompatActivity {
+public class FoodListVolleyActivity extends AppCompatActivity {
     private static final String URL_PRODUCTS = "http://10.0.2.2/android/Food_Shop/all_food.php";
     private RecyclerView recyclerView ;
     List<Product> productList;
@@ -35,7 +32,7 @@ public class FoodListJsonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_list_json);
+        setContentView(R.layout.activity_food_list_volley);
 
         recyclerView = findViewById(R.id.foodRecyclerView) ;
         recyclerView.setHasFixedSize(true);

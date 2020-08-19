@@ -34,23 +34,23 @@
         android:checkable="true"
         android:icon="@drawable/ic_send"
         android:title="Collapsible"
-        android:visible="false"
+        android:visible="true"
         />
 
     <item
         android:id="@+id/item_d"
         android:checkable="true"
         android:icon="@drawable/ic_send"
-        android:title="RecyclerView "
-        android:visible="false"
+        android:title="PostinFireStore "
+        android:visible="true"
         />
 
     <item
         android:id="@+id/item_e"
         android:checkable="true"
         android:icon="@drawable/ic_send"
-        android:title="SqliteDatabase"
-        android:visible="false"
+        android:title="Product List"
+        android:visible="true"
         />
 
 

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.PostProductActivity">
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <ImageView
+          android:id="@+id/imagePost"
+          android:layout_width="match_parent"
+          android:layout_height="300dp"
+          android:layout_marginTop="20sp"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentTop="true"
+          android:src="@drawable/profile_image"
+          />
+      <EditText
+          android:id="@+id/foodEditText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Enter the Food Name..."
+          android:textSize="20dp"
+          android:layout_below="@+id/imagePost"
+          android:padding="8dp"
+          android:layout_marginTop="20dp"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentEnd="true"
+          />
+
+      <EditText
+          android:id="@+id/resturantEditText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Enter the Resturant Name..."
+          android:textSize="20dp"
+          android:layout_below="@+id/foodEditText"
+          android:padding="8dp"
+          android:layout_marginTop="10dp"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentEnd="true"
+          />
+
+      <EditText
+          android:id="@+id/priceEditText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Enter the Food Price..."
+          android:textSize="20dp"
+          android:layout_below="@+id/resturantEditText"
+          android:padding="8dp"
+          android:layout_marginTop="10dp"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentEnd="true"
+          />
+
+      <RatingBar
+          android:id="@+id/ratingBar"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:numStars="5"
+          android:stepSize="0.5"
+          android:layout_below="@+id/priceEditText"
+          android:layout_centerHorizontal="true"/>
+      <Button
+          android:id="@+id/submitBtnPost"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/ratingBar"
+          android:text="Submit Post"
+          android:textAllCaps="false"
+          android:textSize="18dp"
+          android:padding="10dp"
+          android:layout_marginTop="20sp"
+          android:paddingStart="20sp"
+          android:paddingEnd="20sp"
+          android:layout_alignParentEnd="true"
+          />
+
+  </RelativeLayout>
+
+</RelativeLayout>

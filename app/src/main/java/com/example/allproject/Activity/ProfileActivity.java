@@ -146,6 +146,7 @@ public class ProfileActivity extends AppCompatActivity {
             progressDialog.show();
 
             final StorageReference filePath = userProfileimageRef1.child(currentUserId);
+            Log.d("TAG", "imageURI: "+imageuri1 ) ;
             final UploadTask uploadTask = filePath.putFile(imageuri1);
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
@@ -154,6 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
                         throw task.getException();
                     }
                     downloadUrl1=filePath.getDownloadUrl().toString();
+                    Log.d("TAG", "image: "+downloadUrl1) ;
                     return filePath.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -171,6 +173,8 @@ public class ProfileActivity extends AppCompatActivity {
                         profileMap.put("memberProfileImage",downloadUrl1);
                         profileMap.put("memberState","user");
 
+                        Log.d("TAG", "imagepost: "+downloadUrl1) ;
+
                         profileRef.document(currentUserId).set(profileMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -178,7 +182,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 relativeLayout2.setVisibility(View.INVISIBLE);
                                 finish();
                                 progressDialog.dismiss();
-                                Toast.makeText(ProfileActivity.this,"Profile updated with image",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ProfileActivity.this,"Profile updated with image",Toast.LENGTH_SHORT).show();
 
                             }
                         });
@@ -250,6 +254,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(requestCode==1 &&resultCode==RESULT_OK&&data!=null){
             imageuri1=data.getData();
+//            Toast.makeText(this, "yes: "+imageuri1, Toast.LENGTH_LONG).show();
 
             Picasso.get().load(imageuri1).resize(50, 50).
                     centerCrop().into(profileImage1);

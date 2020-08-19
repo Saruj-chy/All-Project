@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -207,6 +208,8 @@ public class EmployListActivity extends AppCompatActivity {
                          "Employ Position:  "+sqLiteList.get(i).getPosition()
                 );
             }
+
+            Log.d("TAG", "tempList: "+tempList) ;
         }
 
 

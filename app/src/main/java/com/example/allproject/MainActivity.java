@@ -26,10 +26,13 @@ import android.widget.TextView;
 
 import com.example.allproject.Activity.ActiveEmployActivity;
 import com.example.allproject.Activity.EmployListActivity;
-import com.example.allproject.Activity.FoodListJsonActivity;
+import com.example.allproject.Activity.FoodListVolleyActivity;
 import com.example.allproject.Activity.FragmentActivity;
 import com.example.allproject.Activity.LoginActivity;
+import com.example.allproject.Activity.PostProductActivity;
+import com.example.allproject.Activity.PostProductListActivity;
 import com.example.allproject.Activity.ProfileActivity;
+import com.example.allproject.Activity.SelectActivity;
 import com.example.allproject.Activity.TestActivity;
 import com.example.allproject.Adapter.JSONAdapter;
 import com.example.allproject.Class.Product;
@@ -243,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, EmployListActivity.class));
                 break;
             case R.id.item_volley:
-                startActivity(new Intent(this, FoodListJsonActivity.class));
+                startActivity(new Intent(this, FoodListVolleyActivity.class));
                 break;
             case R.id.item_active_employ:  //log out
                 startActivity(new Intent(this, ActiveEmployActivity.class));
@@ -252,14 +255,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, FragmentActivity.class));
                 break;
             case R.id.item_c:
-                startActivity(new Intent(this, TestActivity.class));
+                startActivity(new Intent(this, SelectActivity.class));
+//                startActivity(new Intent(this, TestActivity.class));
                 break;
-//            case R.id.item_d:
-//                startActivity(new Intent(this, RecyclerViewActivity.class));
-//                break;
-//            case R.id.item_e:
-//                startActivity(new Intent(this, SqLiteDatabaseActivity.class));
-//                break;
+            case R.id.item_d:
+                startActivity(new Intent(this, PostProductActivity.class));
+                break;
+            case R.id.item_e:
+                startActivity(new Intent(this, PostProductListActivity.class));
+                break;
 
             case R.id.item_log_out:  //log out
                 sendUserToLoginActivity();
