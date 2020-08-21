@@ -25,7 +25,6 @@ public class FragmentActivity extends AppCompatActivity {
 
 
 
-        //TODO here get the string stored in the string variable and do
 
         tabLayout2.addTab(tabLayout2.newTab().setText("Fragment 1"));
         tabLayout2.addTab(tabLayout2.newTab().setText("Fragment 2"));

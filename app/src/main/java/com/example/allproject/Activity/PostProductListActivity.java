@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.allproject.Adapter.ActiveEmployAdapter;
 import com.example.allproject.Adapter.PostProductListAdapter;
-import com.example.allproject.Class.Members;
-import com.example.allproject.Class.Product;
+import com.example.allproject.Class.PostProduct;
 import com.example.allproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,7 +25,7 @@ import java.util.List;
 public class PostProductListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView ;
-    List<Product> productList;
+    List<PostProduct> productList;
 
     private CollectionReference productRef ;
     String currentId ;
@@ -51,22 +49,27 @@ public class PostProductListActivity extends AppCompatActivity {
     }
 
     private void LoadProductList() {
-        productRef.document().collection("post").addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+
+        productRef.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
                 if (e != null) {
                     return;
                 }
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                    Product products = documentSnapshot.toObject(Product.class);
+                    PostProduct products = documentSnapshot.toObject(PostProduct.class);
 
-                    productList.add(new Product(
+                    String id = documentSnapshot.getId() ;
+                    Log.d("TAG", "ID: "+id) ;
+                    productList.add(new PostProduct(
+                            documentSnapshot.getId(),
                             products.getCurrentId(),
                             products.getFood_name(),
-                            products.getTotalPrice(),
                             products.getResturant_name(),
                             products.getRating(),
-                            products.getImage()
+                            products.getTotalPrice(),
+                            products.getImageList(),
+                            products.getThumbList()
                     ));
 
                 }

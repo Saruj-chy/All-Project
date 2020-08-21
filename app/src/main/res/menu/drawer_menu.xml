@@ -34,14 +34,14 @@
         android:checkable="true"
         android:icon="@drawable/ic_send"
         android:title="Collapsible"
-        android:visible="true"
+        android:visible="false"
         />
 
     <item
         android:id="@+id/item_d"
         android:checkable="true"
         android:icon="@drawable/ic_send"
-        android:title="PostinFireStore "
+        android:title="Post Product FireStore "
         android:visible="true"
         />
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -23,12 +24,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.allproject.Class.Employ;
+import com.example.allproject.Class.Members;
 import com.example.allproject.Database.DatabaseHandler;
+import com.example.allproject.MainActivity;
 import com.example.allproject.R;
+import com.example.allproject.interfaces.IActiveEmployeeCallBack;
+import com.example.allproject.interfaces.IntentCallBack;
 
 import java.util.ArrayList;
 
-public class EmployListActivity extends AppCompatActivity {
+public class EmployListActivity extends AppCompatActivity implements IntentCallBack {
 
     private ListView employList ;
     ArrayList<String> tempList;
@@ -277,8 +282,9 @@ public class EmployListActivity extends AppCompatActivity {
                         public void run() {
                             dialog.dismiss();
 
-                            Intent intent = new Intent(getApplicationContext(), EmployListActivity.class);
-                            startActivity(intent);
+//                            Intent intent = new Intent(getApplicationContext(), EmployListActivity.class);
+//                            startActivity(intent);
+                            onIntent(getApplicationContext(),EmployListActivity.class);
                             finish();
                         }
                     }, 1000); //  1 second.
@@ -289,4 +295,11 @@ public class EmployListActivity extends AppCompatActivity {
     }
 
 
+
+
+    @Override
+    public void onIntent(Context context, Object activity) {
+        Intent intent = new Intent(context, (Class<?>) activity);
+        startActivity(intent);
+    }
 }

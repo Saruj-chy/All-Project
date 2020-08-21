@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -37,6 +38,7 @@ import com.example.allproject.Activity.TestActivity;
 import com.example.allproject.Adapter.JSONAdapter;
 import com.example.allproject.Class.Product;
 import com.example.allproject.Constant.JsonArray;
+import com.example.allproject.interfaces.IntentCallBack;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,7 +57,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IntentCallBack {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
     String drawerImageUrl, drawerUserName, drawerStatus ;
@@ -197,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -255,7 +257,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, FragmentActivity.class));
                 break;
             case R.id.item_c:
-                startActivity(new Intent(this, SelectActivity.class));
+
+//                startActivity(new Intent(this, SelectActivity.class));
 //                startActivity(new Intent(this, TestActivity.class));
                 break;
             case R.id.item_d:
@@ -266,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.item_log_out:  //log out
-                sendUserToLoginActivity();
+                onIntent(getApplicationContext(), LoginActivity.class);
                 mAuth.signOut();
                 break;
 
@@ -323,10 +326,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void sendUserToLoginActivity() {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
-    }
 
     private void closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -347,5 +346,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(state, memberState);
         editor.apply();
+    }
+
+    @Override
+    public void onIntent(Context context, Object activity) {
+        Intent intent = new Intent(context, (Class<?>) activity);
+        startActivity(intent);
     }
 }

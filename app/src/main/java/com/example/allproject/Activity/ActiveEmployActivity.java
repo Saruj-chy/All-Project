@@ -13,6 +13,7 @@ import com.example.allproject.Adapter.JSONAdapter;
 import com.example.allproject.Class.Members;
 import com.example.allproject.Class.Product;
 import com.example.allproject.R;
+import com.example.allproject.interfaces.IActiveEmployeeCallBack;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -70,12 +71,21 @@ public class ActiveEmployActivity extends AppCompatActivity {
                 }
                 Log.d("TAG", "memberList: "+memberList ) ;
                 ActiveEmployAdapter adapter = new ActiveEmployAdapter(getApplicationContext(), memberList);
+//                ActiveEmployAdapter adapter1 = new ActiveEmployAdapter() {
+//                    @Override
+//                    public void loadDataFromPage(int page) {
+//
+//                    }
+//                };
                 recyclerView.setAdapter(adapter);
                 GridLayoutManager manager = new GridLayoutManager(getApplicationContext(), 1, GridLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(manager);
+
+
 
 //                textViewData.setText(data);
             }
         });
     }
+
 }

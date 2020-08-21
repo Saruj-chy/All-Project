@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.allproject.Class.Members;
 import com.example.allproject.MainActivity;
 import com.example.allproject.R;
+import com.example.allproject.interfaces.IntentCallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -32,7 +34,7 @@ import java.util.List;
 
 import static com.example.allproject.MainActivity.sharedSaved;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity implements IntentCallBack {
 
     private EditText userFirstName, userLastName, userName, userEmail, userPassword, userConfirmPassword;
     private Button createAccountButton;
@@ -76,9 +78,10 @@ public class RegistrationActivity extends AppCompatActivity {
         alreadyHaveAccountLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SendUserToLoginActivity() ;
+                onIntent(getApplicationContext(), LoginActivity.class);
             }
         });
+
     }
 
 
@@ -167,8 +170,10 @@ public class RegistrationActivity extends AppCompatActivity {
         finish();
     }
 
-    private void SendUserToLoginActivity() {
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+
+    @Override
+    public void onIntent(Context context, Object activity) {
+        Intent intent = new Intent(context, (Class<?>) activity);
         startActivity(intent);
     }
 }
