@@ -38,7 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,6 +57,8 @@ public class UserActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
     double latitude=0, longitude=0 ;
+    private String currentDate, currentTime ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,7 @@ public class UserActivity extends AppCompatActivity {
         //====    location user
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         GetLocation("online");
+        RecentDate();
 
 
 
@@ -142,7 +147,8 @@ public class UserActivity extends AppCompatActivity {
         memberLocation.put("latitude", latitude );
         memberLocation.put("longitude",longitude);
         memberLocation.put("onlineState", onlineState );
-
+        memberLocation.put("time", currentTime );
+        memberLocation.put("date", currentDate );
 
         userRef.document(currentId).set(memberLocation);
 
@@ -189,6 +195,17 @@ public class UserActivity extends AppCompatActivity {
     }
 
 
+    private void RecentDate() {
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        currentDate = currentDateFormat.format(calForDate.getTime());
+        Log.d("TAG"," currentDate: "+ currentDate ) ;
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        currentTime = currentTimeFormat.format(calForTime.getTime());
+        Log.d("TAG"," currentTime: "+ currentTime ) ;
+    }
 
 
 
@@ -197,6 +214,7 @@ public class UserActivity extends AppCompatActivity {
         super.onStart();
         WhereToGo();
         GetLocation("online");
+        RecentDate();
 //        Toast.makeText(this, "App now onStart mode", Toast.LENGTH_SHORT).show();
     }
 
@@ -239,7 +257,7 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        GetLocation("offline");
+//        GetLocation("offline");
 //        Toast.makeText(this, "App now onStop mode", Toast.LENGTH_SHORT).show();
 
     }

@@ -41,6 +41,8 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,9 +64,10 @@ public class ProfileActivity extends AppCompatActivity {
     private String firstName, lastName, userName, email, password, profileImg ;
 
     private FirebaseAuth mAuth ;
-    private CollectionReference profileRef ;
+    private CollectionReference profileRef, LocationRef ;
     private String currentUserId ;
     private StorageReference userProfileimageRef1;
+    private String currentDate, currentTime ;
 
     private Uri imageuri1;
     private String downloadUrl1;
@@ -88,6 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance() ;
         currentUserId = mAuth.getCurrentUser().getUid() ;
         profileRef = FirebaseFirestore.getInstance().collection("Members");
+        LocationRef = FirebaseFirestore.getInstance().collection("Location");
         userProfileimageRef1 = FirebaseStorage.getInstance().getReference().child("Profile Images");
 
         RetrieveUserInfo() ;
@@ -118,6 +122,37 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(galleryintent,1);
             }
         });
+
+        UpdateTimeState("online") ;
+
+    }
+
+    private void UpdateTimeState(String onlineState) {
+
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        currentDate = currentDateFormat.format(calForDate.getTime());
+        Log.d("TAG"," currentDate: "+ currentDate ) ;
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        currentTime = currentTimeFormat.format(calForTime.getTime());
+        Log.d("TAG"," currentTime: "+ currentTime ) ;
+
+        HashMap<String, Object> timeUpdate = new HashMap<>();
+        timeUpdate.put("onlineState", onlineState );
+        timeUpdate.put("time", currentTime );
+        timeUpdate.put("date", currentDate );
+
+        LocationRef.document(currentUserId).update(timeUpdate).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(ProfileActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            }
+        }) ;
+//        LocationRef.document(currentUserId).update("time", currentTimeFormat) ;
+//        LocationRef.document(currentUserId).update("date", currentDateFormat) ;
+
 
     }
 
@@ -237,7 +272,21 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         count = 1;
+        UpdateTimeState("online") ;
+
         Log.d("TAG","Count1: "+count) ;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UpdateTimeState("online") ;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UpdateTimeState("online") ;
     }
 
     @Override
@@ -245,6 +294,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onStop();
         progressDialog.dismiss();
         count = 2;
+//        UpdateTimeState("offline");
         Log.d("TAG","Count2: "+count) ;
     }
 

@@ -35,8 +35,6 @@ public class PostProductListAdapter extends RecyclerView.Adapter<PostProductList
     private CollectionReference productRef ;
     private String currentUserId;
 
-
-
     public PostProductListAdapter(Context mCtx, List<PostProduct> productList) {
         this.mCtx = mCtx;
         this.productList = productList;

@@ -33,8 +33,6 @@ import com.example.allproject.Activity.LoginActivity;
 import com.example.allproject.Activity.PostProductActivity;
 import com.example.allproject.Activity.PostProductListActivity;
 import com.example.allproject.Activity.ProfileActivity;
-import com.example.allproject.Activity.SelectActivity;
-import com.example.allproject.Activity.TestActivity;
 import com.example.allproject.Adapter.JSONAdapter;
 import com.example.allproject.Class.Product;
 import com.example.allproject.Constant.JsonArray;
@@ -53,7 +51,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
     double latitude=0, longitude=0 ;
+
+    private String currentDate, currentTime ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
+        RecentDate();
 
 
     }
@@ -210,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
         DrawerProfileRef();
         GetLocation("online");
+        RecentDate();
 //        Toast.makeText(this, "onStatrt", Toast.LENGTH_SHORT).show();
 
     }
@@ -217,14 +221,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStop() {
         super.onStop();
-        GetLocation("online");
+//        GetLocation("online");
 //        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        GetLocation("online");
+        GetLocation("offline");
 //        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
@@ -307,9 +311,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         memberLocation.put("latitude", latitude );
         memberLocation.put("longitude",longitude);
         memberLocation.put("onlineState", onlineState );
+        memberLocation.put("time", currentTime );
+        memberLocation.put("date", currentDate );
 
         userFireStore.collection("Location").document(currentUserId).set(memberLocation);
-    }    @Override
+    }
+    private void RecentDate() {
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        currentDate = currentDateFormat.format(calForDate.getTime());
+        Log.d("TAG"," currentDate: "+ currentDate ) ;
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        currentTime = currentTimeFormat.format(calForTime.getTime());
+        Log.d("TAG"," currentTime: "+ currentTime ) ;
+    }
+
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case REQUEST_CODE:

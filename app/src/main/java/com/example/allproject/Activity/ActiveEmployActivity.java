@@ -21,7 +21,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ActiveEmployActivity extends AppCompatActivity {
@@ -30,6 +32,7 @@ public class ActiveEmployActivity extends AppCompatActivity {
     List<Members> memberList;
 
     private CollectionReference memberRef ;
+    private String currentDate, currentTime ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,20 @@ public class ActiveEmployActivity extends AppCompatActivity {
         memberList = new ArrayList<>();
 
         LoadMembersList();
+
+        RecentDate();
+    }
+
+    private void RecentDate() {
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        currentDate = currentDateFormat.format(calForDate.getTime());
+        Log.d("TAG"," currentDate: "+ currentDate ) ;
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        currentTime = currentTimeFormat.format(calForTime.getTime());
+        Log.d("TAG"," currentTime: "+ currentTime ) ;
     }
 
     private void LoadMembersList() {
